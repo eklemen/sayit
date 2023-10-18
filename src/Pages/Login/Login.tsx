@@ -1,10 +1,24 @@
-import React from 'react';
+import { useForm } from 'react-hook-form';
+import api from '@src/fetch';
+import { User } from '@src/fetch/responseTypes/user';
+import { useNavigate } from 'react-router-dom';
 
+interface FormValues {
+  email: string;
+}
 function Login() {
-  const handleSubmit = (event: any) => {
-    debugger;
-    event.preventDefault();
-    console.log('event-------->', event);
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+  const onSubmit = async (data: FormValues) => {
+    console.log(data);
+    const login = await api.get<User>('/user', { email: data.email });
+    window.localStorage.setItem('email', login.email);
+    window.localStorage.setItem('id', login._id);
+    navigate('/dashboard');
   };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -15,7 +29,7 @@ function Login() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label
               htmlFor="email"
@@ -26,12 +40,24 @@ function Login() {
             <div className="mt-2">
               <input
                 id="email"
-                name="email"
-                type="email"
                 autoComplete="email"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                {...register('email', {
+                  required: true,
+                  pattern: /^\S+@\S+$/i,
+                })}
+                aria-invalid={errors.email ? 'true' : 'false'}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-2"
               />
+              {errors.email?.type === 'required' && (
+                <p role="alert" className="text-red-700 text-sm">
+                  Email is required
+                </p>
+              )}
+              {errors.email?.type === 'pattern' && (
+                <p role="alert" className="text-red-700 text-sm">
+                  Invalid email format
+                </p>
+              )}
             </div>
           </div>
 
