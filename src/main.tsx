@@ -1,5 +1,5 @@
 import { RecoilRoot } from 'recoil';
-import './index.css';
+import './tailwind.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
