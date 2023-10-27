@@ -3,17 +3,26 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from '@pages/Error';
 import Login from '@pages/Login/Login';
 import Dashboard from '@pages/Dashboard/Dashboard';
+import AuthRoute from '@src/components/AuthRoute';
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <div>home</div>,
+      element: (
+        <AuthRoute>
+          <Dashboard />
+        </AuthRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {
       path: '/dashboard',
-      element: <Dashboard />,
+      element: (
+        <AuthRoute>
+          <Dashboard />
+        </AuthRoute>
+      ),
       errorElement: <ErrorPage />,
     },
     {

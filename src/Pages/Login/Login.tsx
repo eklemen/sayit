@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
-import api from '@src/fetch';
-import { User } from '@src/fetch/responseTypes/user';
 import { useNavigate } from 'react-router-dom';
+import { useUserMutation } from '@src/hooks/useGetUser';
 
 interface FormValues {
   email: string;
@@ -13,12 +12,11 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const onSubmit = async (data: FormValues) => {
-    console.log(data);
-    const login = await api.get<User>('/user', { email: data.email });
-    window.localStorage.setItem('email', login.email);
-    window.localStorage.setItem('id', login._id);
-    navigate('/dashboard');
+  const { fetchUser } = useUserMutation();
+  const onSubmit = async ({ email }: FormValues) => {
+    const user = await fetchUser({ email });
+    console.log('user-------->', user);
+    if (user) navigate('/dashboard');
   };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

@@ -1,16 +1,21 @@
-import { RecoilRoot } from 'recoil';
-import './tailwind.css';
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-
+import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './tailwind.css';
 import App from './App';
 
-ReactDOM.render(
+import { createRoot } from 'react-dom/client';
+const queryClient = new QueryClient();
+
+const container = document.getElementById('root');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+root.render(
   <React.StrictMode>
-    <RecoilRoot>
-      <App />
-    </RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <App />
+      </RecoilRoot>
+    </QueryClientProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
 );
