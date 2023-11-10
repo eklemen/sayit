@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from '@pages/Error';
 import Login from '@pages/Login/Login';
 import Dashboard from '@pages/Dashboard/Dashboard';
+import CreateWord from '@pages/CreateWord/CreateWord';
 import AuthRoute from '@src/components/AuthRoute';
 
 function App() {
@@ -21,6 +22,15 @@ function App() {
       element: (
         <AuthRoute>
           <Dashboard />
+        </AuthRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/create-word',
+      element: (
+        <AuthRoute>
+          <CreateWord />
         </AuthRoute>
       ),
       errorElement: <ErrorPage />,

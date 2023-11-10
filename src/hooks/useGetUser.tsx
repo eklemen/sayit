@@ -13,6 +13,7 @@ export const useUserMutation = () => {
     if (user) return user;
     const userEmail = email || localStorage.getItem('email');
     const userData = await api.get<User>('/user', { email: userEmail });
+    localStorage.setItem('email', userData.email);
     setUser(userData);
     return userData;
   };

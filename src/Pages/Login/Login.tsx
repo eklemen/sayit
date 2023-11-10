@@ -15,7 +15,6 @@ function Login() {
   const { fetchUser } = useUserMutation();
   const onSubmit = async ({ email }: FormValues) => {
     const user = await fetchUser({ email });
-    console.log('user-------->', user);
     if (user) navigate('/dashboard');
   };
   return (
