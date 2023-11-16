@@ -3,7 +3,6 @@ import { useUserMutation } from '@src/hooks/useGetUser';
 import api from '@src/fetch';
 import { Word } from '@src/fetch/responseTypes/word';
 import { useGetSounds } from '@src/hooks/useGetSounds';
-import { SoundKeys } from '@src/fetch/responseTypes/sound';
 
 function Dashboard() {
   const { user, fetchUser } = useUserMutation();
@@ -35,9 +34,9 @@ function Dashboard() {
     audio.play().catch((error) => console.error('Error playing audio:', error));
   };
   return (
-    <div className="flex justify-center items-center h-full">
-      <div className="flex justify-center items-center">
-        <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow h-fit flex flex-col">
+    <div className="flex-center h-full">
+      <div className="flex-center flex-col">
+        <div className="card">
           {!currentWord && <div>loading...</div>}
           {currentWord && (
             <div className="flex mb-4">
@@ -45,7 +44,7 @@ function Dashboard() {
                 return (
                   <button
                     key={sound._id}
-                    className="text-blue-500 underline hover:text-blue-700 mx-0.5 text-8xl"
+                    className="link mx-0.5 text-8xl"
                     onClick={() => playAudio(soundMap?.[sound.audioKey] || '')}
                   >
                     {sound.letters}
@@ -54,23 +53,23 @@ function Dashboard() {
               })}
             </div>
           )}
-          {currentWord && (
-            <button className="flex">{currentWord.wordId.fullAudio}</button>
-          )}
-          <div className="flex justify-center">
-            <button
-              disabled={currentCard === 0}
-              onClick={() => setCurrentCard(currentCard - 1)}
-            >
-              {'<'}
-            </button>
-            <button
-              disabled={currentCard === words.length - 1}
-              onClick={() => setCurrentCard(currentCard + 1)}
-            >
-              {'>'}
-            </button>
-          </div>
+          {/*{currentWord && (*/}
+          {/*  <button className="flex">{currentWord.wordId.fullAudio}</button>*/}
+          {/*)}*/}
+        </div>
+        <div className="flex justify-center">
+          <button
+            disabled={currentCard === 0}
+            onClick={() => setCurrentCard(currentCard - 1)}
+          >
+            {'<'}
+          </button>
+          <button
+            disabled={currentCard === words.length - 1}
+            onClick={() => setCurrentCard(currentCard + 1)}
+          >
+            {'>'}
+          </button>
         </div>
       </div>
     </div>

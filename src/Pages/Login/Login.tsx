@@ -15,7 +15,7 @@ function Login() {
   const { fetchUser } = useUserMutation();
   const onSubmit = async ({ email }: FormValues) => {
     const user = await fetchUser({ email });
-    if (user) navigate('/dashboard');
+    if (user) navigate('/');
   };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

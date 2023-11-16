@@ -5,3 +5,23 @@
 html, body, #root, .App {
     height: 100%;
 }
+
+.flex-col-full {
+    @apply flex flex-col items-center h-full;
+}
+
+.container {
+    @apply max-w-[1100px] flex items-center pt-28 justify-center;
+}
+
+.card {
+    @apply w-[250px] p-6 bg-white border border-gray-200 rounded-lg shadow h-fit flex flex-col items-center;
+}
+
+.flex-center {
+    @apply flex justify-center items-center;
+}
+
+.link {
+    @apply text-blue-500 underline hover:text-blue-700;
+}

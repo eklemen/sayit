@@ -7,11 +7,7 @@ interface FormValues {
 }
 
 function CreateWord() {
-  console.log('render-------->');
   const { sounds, isLoading, error } = useGetSounds();
-  console.log('sounds-------->', sounds);
-  console.log('isLoading-------->', isLoading);
-  console.log('error-------->', error);
   const {
     register,
     handleSubmit,
