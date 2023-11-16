@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useUserMutation } from '@src/hooks/useGetUser';
+import { useGetUser } from '@src/hooks/useGetUser';
 import api from '@src/fetch';
 import { Word } from '@src/fetch/responseTypes/word';
 import { useGetSounds } from '@src/hooks/useGetSounds';
 
 function Dashboard() {
-  const { user, fetchUser } = useUserMutation();
+  const { user, fetchUser } = useGetUser();
   const { soundMap } = useGetSounds();
   const [currentCard, setCurrentCard] = useState(0);
   const [words, setWords] = useState<Word[]>([]);

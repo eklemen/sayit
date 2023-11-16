@@ -1,8 +1,8 @@
 import Container from '@src/components/Container';
-import { useUserMutation } from '@src/hooks/useGetUser';
+import { useGetUser } from '@src/hooks/useGetUser';
 
 function Manage() {
-  const { user } = useUserMutation();
+  const { user } = useGetUser();
   console.log('user-------->', user);
   return (
     <Container>

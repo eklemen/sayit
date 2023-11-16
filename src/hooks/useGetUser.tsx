@@ -1,22 +1,30 @@
 import { User } from '@src/fetch/responseTypes/user';
 import api from '@src/fetch';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 type FormValues = {
   email?: string;
 };
 
-export const useUserMutation = () => {
-  const [user, setUser] = useState<User>();
+export const useGetUser = (passedEmail?: string) => {
+  const email = passedEmail || localStorage.getItem('email');
 
-  const fetchUser = async ({ email }: FormValues) => {
-    if (user) return user;
-    const userEmail = email || localStorage.getItem('email');
-    const userData = await api.get<User>('/user', { email: userEmail });
-    localStorage.setItem('email', userData.email);
-    setUser(userData);
-    return userData;
+  const {
+    data: user,
+    isLoading: userLoading,
+    error: userError,
+    isSuccess,
+  } = useQuery({
+    queryKey: ['user', email],
+    queryFn: () => api.get<User>('/user', { email }),
+    enabled: !!email, // Only run the query if the email is available
+  });
+
+  return {
+    user,
+    userLoading,
+    userError,
+    isSuccess,
   };
-
-  return { fetchUser, user };
 };

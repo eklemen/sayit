@@ -1,22 +1,28 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useUserMutation } from '@src/hooks/useGetUser';
+import { useGetUser } from '@src/hooks/useGetUser';
+import { useState } from 'react';
 
 interface FormValues {
   email: string;
 }
 function Login() {
   const navigate = useNavigate();
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const { fetchUser } = useUserMutation();
+  const { user, isSuccess } = useGetUser(submittedEmail);
   const onSubmit = async ({ email }: FormValues) => {
-    const user = await fetchUser({ email });
-    if (user) navigate('/');
+    setSubmittedEmail(email);
+    localStorage.setItem('email', email);
   };
+  if (isSuccess && user) {
+    navigate('/');
+    return null;
+  }
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
