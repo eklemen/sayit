@@ -8,12 +8,8 @@ export const useGetSounds = () => {
     queryKey: ['sounds'],
     queryFn: () => api.get('/sounds'),
   });
-  console.log('data-------->', data);
-  console.log('isLoading-------->', isLoading);
-  console.log('error-------->', error);
   // soundMap contains a key of the sound filename and a value of the presigned url
   const soundMap = useMemo(() => {
-    console.log('data in memo-------->', data);
     if (data) {
       return data.reduce((acc, sound) => {
         acc[sound.key] = sound.url;

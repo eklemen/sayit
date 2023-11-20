@@ -3,31 +3,31 @@ import { useGetUser } from '@src/hooks/useGetUser';
 import api from '@src/fetch';
 import { Word } from '@src/fetch/responseTypes/word';
 import { useGetSounds } from '@src/hooks/useGetSounds';
+import { useQuery } from '@tanstack/react-query';
 
 function Dashboard() {
-  const { user, fetchUser } = useGetUser();
+  const { user, userLoading } = useGetUser();
+  const wordGroup = user?.wordGroups[user?.wordGroups?.length - 1];
   const { soundMap } = useGetSounds();
+  const { data: words, isLoading: loadingWords } = useQuery({
+    queryKey: ['words', wordGroup],
+    queryFn: () =>
+      api.get<Word[]>(
+        '/words',
+        { groupName: wordGroup },
+        {
+          apitoken: user?._id || '',
+        },
+      ),
+    enabled: !!wordGroup,
+  });
   const [currentCard, setCurrentCard] = useState(0);
-  const [words, setWords] = useState<Word[]>([]);
+  const [currentWord, setCurrentWord] = useState<Word | null>(null);
   useEffect(() => {
-    if (user) {
-      const wordGroup = user?.wordGroups[user?.wordGroups?.length - 1];
-      const getWords = async () => {
-        const words = await api.get(
-          '/words',
-          { groupName: wordGroup },
-          {
-            apitoken: user._id,
-          },
-        );
-        setWords(words);
-      };
-      getWords();
-    } else {
-      fetchUser({});
+    if (words) {
+      setCurrentWord(words[currentCard]);
     }
-  }, [user]);
-  const currentWord = words[currentCard];
+  }, [words]);
   const playAudio = (source: string) => {
     // const source = soundMap ? soundMap[key] : '';
     const audio = new Audio(source);
@@ -37,7 +37,7 @@ function Dashboard() {
     <div className="flex-center h-full">
       <div className="flex-center flex-col">
         <div className="card">
-          {!currentWord && <div>loading...</div>}
+          {userLoading || loadingWords || !currentWord ? <div>loading...</div> : null}
           {currentWord && (
             <div className="flex mb-4">
               {currentWord.wordId.sounds.map((sound) => {
@@ -65,7 +65,7 @@ function Dashboard() {
             {'<'}
           </button>
           <button
-            disabled={currentCard === words.length - 1}
+            disabled={loadingWords || currentCard === (words?.length ?? 0) - 1}
             onClick={() => setCurrentCard(currentCard + 1)}
           >
             {'>'}

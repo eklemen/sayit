@@ -15,7 +15,11 @@ html, body, #root, .App {
 }
 
 .card {
-    @apply w-[250px] p-6 bg-white border border-gray-200 rounded-lg shadow h-fit flex flex-col items-center;
+    @apply w-[250px] p-6 bg-white border border-gray-200 rounded-lg shadow h-fit flex flex-col items-center min-h-[74px] justify-center mb-5;
+}
+
+.card-btn {
+    @apply card hover:bg-gray-200;
 }
 
 .flex-center {
@@ -25,3 +29,11 @@ html, body, #root, .App {
 .link {
     @apply text-blue-500 underline hover:text-blue-700;
 }
+
+/*.btn-green {*/
+/*    @apply relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800;*/
+/*}*/
+
+/*.btn-green span {*/
+/*    @apply relative px-5 py-2.5 transition-all ease-in duration-75 bg-white text-gray-800 hover:text-white rounded-md;*/
+/*}*/

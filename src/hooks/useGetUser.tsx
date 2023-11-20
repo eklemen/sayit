@@ -1,11 +1,6 @@
 import { User } from '@src/fetch/responseTypes/user';
 import api from '@src/fetch';
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-
-type FormValues = {
-  email?: string;
-};
 
 export const useGetUser = (passedEmail?: string) => {
   const email = passedEmail || localStorage.getItem('email');
@@ -14,6 +9,7 @@ export const useGetUser = (passedEmail?: string) => {
     data: user,
     isLoading: userLoading,
     error: userError,
+    refetch: refetchUser,
     isSuccess,
   } = useQuery({
     queryKey: ['user', email],
@@ -26,5 +22,7 @@ export const useGetUser = (passedEmail?: string) => {
     userLoading,
     userError,
     isSuccess,
+    refetchUser,
+    email,
   };
 };
