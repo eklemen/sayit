@@ -15,7 +15,7 @@ export interface FormValues {
   groupName: string;
 }
 
-function WordGroupModal({ showModal, onClose, onSave }: Props) {
+function WordGroupModal({ showModal, onClose }: Props) {
   // useEffect(() => {
   //   function handleKeyDown(event: KeyboardEvent) {
   //     if (event.key === 'Escape') {
@@ -51,8 +51,7 @@ function WordGroupModal({ showModal, onClose, onSave }: Props) {
   }, [error, data]);
   if (!showModal) return null;
 
-  const onSub = ({ groupName }: FormValues, e) => {
-    e.preventDefault();
+  const onSub = ({ groupName }: FormValues) => {
     console.log('groupName-------->', groupName);
     // saveWordGroup({
     //   groupName,

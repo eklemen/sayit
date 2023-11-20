@@ -2,8 +2,10 @@ import Container from '@src/components/Container';
 import { useGetUser } from '@src/hooks/useGetUser';
 import { useState } from 'react';
 import WordGroupForm from '@src/components/WordGroupForm';
+import { useNavigate } from 'react-router-dom';
 
 function Manage() {
+  const navigate = useNavigate();
   const { user, userLoading } = useGetUser();
   const [showModal, setShowModal] = useState(false);
   console.log('user-------->', user);
@@ -21,7 +23,11 @@ function Manage() {
           )}
           {user?.wordGroups?.map((wordGroup) => {
             return (
-              <button key={wordGroup} className="card-btn">
+              <button
+                key={wordGroup}
+                className="card-btn"
+                onClick={() => navigate(`/manage/group/${wordGroup}`)}
+              >
                 <p className="text-lg">{wordGroup}</p>
               </button>
             );
@@ -45,17 +51,6 @@ function Manage() {
           </button>
         </div>
       </div>
-      {/*{showModal && (*/}
-      {/*  <WordGroupModal*/}
-      {/*    showModal={showModal}*/}
-      {/*    onClose={() => {*/}
-      {/*      setShowModal(false);*/}
-      {/*    }}*/}
-      {/*    onSave={() => {*/}
-      {/*      setShowModal(false);*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*)}*/}
     </Container>
   );
 }

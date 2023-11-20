@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '@src/fetch';
 import { useForm } from 'react-hook-form';
 import { useGetUser } from '@src/hooks/useGetUser';
+import { toast } from 'react-toastify';
 
 interface Props {
   onClose: () => void;
@@ -36,10 +37,14 @@ function WordGroupForm({ onClose }: Props) {
   } = useForm<FormValues>();
   useEffect(() => {
     if (!error && data) {
-      console.log('data-------->', data);
+      toast('Group created!', {
+        type: 'success',
+      });
       onClose();
     } else {
-      console.log('error-------->', error);
+      toast('Something went wrong creating this group.', {
+        type: 'error',
+      });
     }
   }, [error, data]);
   // if (!showWordGroupForm) return null;
