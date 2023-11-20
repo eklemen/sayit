@@ -35,18 +35,14 @@ class FetchWrapper {
       fetchOptions.body = JSON.stringify(data);
     }
 
-    try {
-      const response = await fetch(fullURL.toString(), fetchOptions);
-      const responseData = await response.json();
+    const response = await fetch(fullURL.toString(), fetchOptions);
+    const responseData = await response.json();
 
-      if (!response.ok) {
-        throw new Error(responseData.message || 'An error occurred');
-      }
-
-      return responseData as R;
-    } catch (error) {
-      throw error;
+    if (!response.ok) {
+      throw new Error(responseData.message || 'An error occurred');
     }
+
+    return responseData as R;
   }
 
   get<R = any>(
