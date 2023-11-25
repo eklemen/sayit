@@ -41,7 +41,7 @@ function WordGroupForm({ onClose }: Props) {
         type: 'success',
       });
       onClose();
-    } else {
+    } else if (error) {
       toast('Something went wrong creating this group.', {
         type: 'error',
       });

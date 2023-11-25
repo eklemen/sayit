@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export const useGetUser = (passedEmail?: string) => {
   const email = passedEmail || localStorage.getItem('email');
+  const userId = localStorage.getItem('userId');
 
   const {
     data: user,
@@ -24,5 +25,6 @@ export const useGetUser = (passedEmail?: string) => {
     isSuccess,
     refetchUser,
     email,
+    userId,
   };
 };

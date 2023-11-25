@@ -20,6 +20,7 @@ function Login() {
     localStorage.setItem('email', email);
   };
   if (isSuccess && user) {
+    localStorage.setItem('userId', user._id);
     navigate('/');
     return null;
   }

@@ -8,7 +8,6 @@ function Manage() {
   const navigate = useNavigate();
   const { user, userLoading } = useGetUser();
   const [showModal, setShowModal] = useState(false);
-  console.log('user-------->', user);
   return (
     <Container>
       <div className="flex justify-center items-start w-full">
