@@ -4,6 +4,7 @@ import api from '@src/fetch';
 import { useForm } from 'react-hook-form';
 import { useGetUser } from '@src/hooks/useGetUser';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   onClose: () => void;
@@ -14,8 +15,15 @@ export interface FormValues {
 }
 
 function WordGroupForm({ onClose }: Props) {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useGetUser();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<FormValues>();
   const {
     mutate: saveWordGroup,
     error,
@@ -28,20 +36,15 @@ function WordGroupForm({ onClose }: Props) {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
+    onSuccess: () => {
+      const groupName = getValues('groupName');
+      if (groupName) {
+        navigate(`/manage/group/${groupName}`);
+      }
+    },
   });
-  // const { refetchUser } = useGetUser();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
   useEffect(() => {
-    if (!error && data) {
-      toast('Group created!', {
-        type: 'success',
-      });
-      onClose();
-    } else if (error) {
+    if (error) {
       toast('Something went wrong creating this group.', {
         type: 'error',
       });

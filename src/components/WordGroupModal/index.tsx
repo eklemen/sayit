@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import api from '@src/fetch';
-import WordGroupModalHeader from '@src/components/WordGroupModel/WordGroupModalHeader';
-import WordGroupModalFooter from '@src/components/WordGroupModel/WordGroupModalFooter';
+import WordGroupModalHeader from '@src/components/WordGroupModal/WordGroupModalHeader';
+import WordGroupModalFooter from '@src/components/WordGroupModal/WordGroupModalFooter';
 import { useForm } from 'react-hook-form';
 
 interface Props {
