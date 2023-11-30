@@ -41,6 +41,7 @@ module.exports = {
     'simple-import-sort/imports': 'off',
     'simple-import-sort/exports': 'off',
     'react-hooks/rules-of-hooks': 'error',
+    'react/no-unescaped-entities': 'off',
     'react-hooks/exhaustive-deps': [
       'off',
       {

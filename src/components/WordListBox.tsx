@@ -5,10 +5,12 @@ const options = [
   { value: 'one', label: 'Option One' },
   { value: 'two', label: 'Option Two' },
 ];
-function WordListBox() {
+function WordListBox({ ...rest }) {
   const [selected, setSelected] = useState<string[]>([]);
   return (
     <DualListBox
+      {...rest}
+      canFilter
       options={options}
       selected={selected}
       onChange={(value: string[]) => setSelected(value)}

@@ -6,7 +6,7 @@ interface Sound {
   _id: string;
 }
 
-interface WordData {
+export interface WordData {
   _id: string;
   word: string;
   fullAudio: string;

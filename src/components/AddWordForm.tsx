@@ -1,40 +1,109 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import Select, { GroupBase } from 'react-select';
-import { FormValues } from '@src/components/WordGroupForm';
 import { useGetUser } from '@src/hooks/useGetUser';
 import { useGetWords } from '@src/hooks/useGetWords';
-import WordListBox from '@src/components/WordListBox';
+import Select from 'react-select';
+import WordCard from '@pages/ManageGroup/WordCard';
 
-type OptionType = {
-  value: string;
-  label: string;
+type FormValues = {
+  words: OptionType;
 };
+
+interface OptionType {
+  label: string;
+  value: string;
+}
+
 function AddWordForm() {
   const { user, userLoading } = useGetUser();
-  const { words, isLoading: isWordsLoading } = useGetWords();
+  const { allWords, isLoading: isWordsLoading, words } = useGetWords();
+  const [wordsToDelete, setWordsToDelete] = useState<string[]>([]);
+  const [wordsToAdd, setWordsToAdd] = useState<OptionType[]>([]);
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
   } = useForm<FormValues>();
-  const onSubmit = (data: FormValues) => console.log(data);
+  const onSubmit = (data: FormValues) => {
+    console.log('data to delete-------->', wordsToDelete);
+  };
+  const handleDelete = (id: string) => {
+    setWordsToDelete((prev) => [...prev, id]);
+  };
   if (userLoading || !user || isWordsLoading) return null;
+  const filteredWords = words?.filter((w) => !wordsToDelete.includes(w._id));
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="my-4">
-      <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col my-4 w-[600px]">
+      <div className="relative flex flex-col w-full">
         <div className="px-6 py-6">
-          <div className="space-y-4">
-            {!isWordsLoading && !words.length ? (
+          <div className="flex flex-col items-center">
+            {!isWordsLoading && !allWords?.length ? (
               <p>
                 Let's add some words to your word group! Start searching below, or create
                 your own.
               </p>
             ) : null}
-            <WordListBox />
+            <div className="mb-[100px] max-w-fit">
+              <label
+                htmlFor="words"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Select all the words you want to add to this list.
+                <br />
+                You can always edit these later.
+              </label>
+              <Controller
+                name="words"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    classNamePrefix="select"
+                    isLoading={userLoading}
+                    isSearchable
+                    onChange={(value) => {
+                      setValue('words', { label: '', value: '' });
+                      if (value) {
+                        setWordsToAdd([...wordsToAdd, value]);
+                      }
+                    }}
+                    options={
+                      allWords?.map(({ word, _id }) => ({ label: word, value: _id })) ||
+                      []
+                    }
+                  />
+                )}
+              />
+            </div>
+            <div className="flex justify-around flex-col">
+              <div className="flex flex-col min-w-[240px] flex-1">
+                <p>Words for this group:</p>
+                {wordsToAdd?.map((w) => (
+                  <WordCard
+                    key={w.value}
+                    word={w.label}
+                    _id={w.value}
+                    onDelete={() => {
+                      setWordsToAdd((prev) => prev.filter((p) => p.value !== w.value));
+                    }}
+                  />
+                ))}
+              </div>
+              <hr className="h-px my-6 bg-gray-200 border-0" />
+              <div className="flex flex-col min-w-[240px] flex-1">
+                {filteredWords?.map((w) => (
+                  <WordCard
+                    key={w._id}
+                    word={w.wordId.word}
+                    _id={w._id}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
+            </div>
             <button
-              className="text-red-600 accent-red-800 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="text-red-600 accent-red-800 background-transparent uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
               onClick={() => {}}
             >
@@ -54,34 +123,3 @@ function AddWordForm() {
 }
 
 export default AddWordForm;
-
-// Dropdown for word group
-// <label
-//   htmlFor="groupName"
-//   className="block text-sm font-medium leading-6 text-gray-900"
-// >
-//   Group name
-// </label>
-// <div className="mt-2">
-//   <Controller
-//     name="groupName"
-//     control={control}
-//     render={({ field }) => (
-//       <Select
-//         {...field}
-//         classNamePrefix="select"
-//         isLoading={userLoading}
-//         defaultValue={{
-//           label: user.wordGroups[0],
-//           value: user.wordGroups[0],
-//         }}
-//         isSearchable
-//         options={
-//           user?.wordGroups?.map(
-//             (w) => ({ label: w, value: w } as OptionType),
-//           ) || []
-//         }
-//       />
-//     )}
-//   />
-// </div>
