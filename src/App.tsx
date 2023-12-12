@@ -1,11 +1,11 @@
 import type React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import AuthRoute from '@src/components/AuthRoute';
 import ErrorPage from '@pages/Error';
 import Login from '@pages/Login/Login';
 import Dashboard from '@pages/Dashboard/Dashboard';
-import AuthRoute from '@src/components/AuthRoute';
 import Manage from '@pages/Manage/Manage';
-import { ToastContainer } from 'react-toastify';
 import ManageGroup from '@pages/ManageGroup/ManageGroup';
 
 function App() {

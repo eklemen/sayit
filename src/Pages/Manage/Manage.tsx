@@ -1,12 +1,26 @@
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import type { Id } from 'react-toastify';
+import { useRecoilState } from 'recoil';
+import { saveWordsState } from '@src/recoilAtoms';
+import WordGroupForm from '@src/components/WordGroupForm';
 import Container from '@src/components/Container';
 import { useGetUser } from '@src/hooks/useGetUser';
-import { useState } from 'react';
-import WordGroupForm from '@src/components/WordGroupForm';
-import { useNavigate } from 'react-router-dom';
 
 function Manage() {
   const navigate = useNavigate();
   const { user, userLoading } = useGetUser();
+  const [saveState] = useRecoilState(saveWordsState);
+  const toastId = useRef<Id>('');
+  useEffect(() => {
+    if (saveState?.toaster && !toast.isActive(toastId.current)) {
+      toastId.current = toast(saveState?.toaster.message, {
+        type: saveState?.toaster.type,
+        toastId: saveState?.toaster.toastId,
+      });
+    }
+  }, [saveState?.toaster]);
   const [showModal, setShowModal] = useState(false);
   return (
     <Container>

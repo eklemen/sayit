@@ -7,7 +7,7 @@ export function useGetWords() {
   const { groupName } = useParams();
   const userId = localStorage.getItem('userId') ?? '';
   const { data, isLoading, error } = useQuery({
-    queryKey: ['words'],
+    queryKey: ['words', groupName],
     queryFn: () => api.get<Word[]>('/words', { groupName }, { apitoken: userId }),
   });
   const {

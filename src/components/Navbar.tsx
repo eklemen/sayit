@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
@@ -18,7 +19,7 @@ function Navbar() {
         "
       >
         <div>
-          <a href="#">
+          <Link to="/">
             <div className="flex items-center">
               <svg
                 className="w-10 h-10 text-gray-200 dark:text-gray-600"
@@ -31,7 +32,7 @@ function Navbar() {
               </svg>
               <p className="ml-2">Sayit</p>
             </div>
-          </a>
+          </Link>
         </div>
 
         <div className="hidden w-full md:flex md:items-center md:w-auto" id="menu">
@@ -44,27 +45,27 @@ function Navbar() {
               md:pt-0"
           >
             <li>
-              <a className="md:p-4 py-2 block hover:text-purple-400" href="#">
+              <Link className="md:p-4 py-2 block hover:text-purple-400" to="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="md:p-4 py-2 block hover:text-purple-400" href="#">
+              <Link className="md:p-4 py-2 block hover:text-purple-400" to="/manage">
                 Manage words
-              </a>
+              </Link>
             </li>
             <li>
-              <a className="md:p-4 py-2 block hover:text-purple-400" href="#">
+              <Link className="md:p-4 py-2 block hover:text-purple-400" to="/">
                 Settings
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 className="md:p-4 py-2 block hover:text-purple-400 text-purple-500"
-                href="#"
+                to="/"
               >
                 Logout
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

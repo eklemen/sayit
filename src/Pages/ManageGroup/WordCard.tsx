@@ -6,14 +6,14 @@ interface Props {
   onDelete: (id: string) => void;
 }
 function WordCard({ word, _id, onDelete }: Props) {
-  const [deleteClicked, setDeleteClicked] = useState(false);
-  useEffect(() => {
-    if (deleteClicked) {
-      setTimeout(() => {
-        setDeleteClicked(false);
-      }, 3000);
-    }
-  }, [deleteClicked]);
+  // const [deleteClicked, setDeleteClicked] = useState(false);
+  // useEffect(() => {
+  //   if (deleteClicked) {
+  //     setTimeout(() => {
+  //       setDeleteClicked(false);
+  //     }, 3000);
+  //   }
+  // }, [deleteClicked]);
   return (
     <div
       key={_id}
@@ -21,11 +21,7 @@ function WordCard({ word, _id, onDelete }: Props) {
     >
       <span className="text-xl font-bold">{word}</span>
       <div className="space-x-2">
-        {deleteClicked ? (
-          <button onClick={() => onDelete(_id)}>?</button>
-        ) : (
-          <button onClick={() => setDeleteClicked(true)}>X</button>
-        )}
+        <button onClick={() => onDelete(_id)}>X</button>
       </div>
     </div>
   );

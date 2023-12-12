@@ -2,6 +2,7 @@ import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './tailwind.css';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 
 import { createRoot } from 'react-dom/client';
