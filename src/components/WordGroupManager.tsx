@@ -21,7 +21,7 @@ interface OptionType {
 }
 
 // TODO: Change name of this component
-function AddWordForm() {
+function WordGroupManager() {
   const { user, userLoading } = useGetUser();
   const { groupName } = useParams();
   const navigate = useNavigate();
@@ -159,4 +159,4 @@ function AddWordForm() {
   );
 }
 
-export default AddWordForm;
+export default WordGroupManager;

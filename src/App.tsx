@@ -7,6 +7,7 @@ import Login from '@pages/Login/Login';
 import Dashboard from '@pages/Dashboard/Dashboard';
 import Manage from '@pages/Manage/Manage';
 import ManageGroup from '@pages/ManageGroup/ManageGroup';
+import CreateWord from '@pages/CreateWord/CreateWord';
 
 function App() {
   const router = createBrowserRouter([
@@ -33,6 +34,15 @@ function App() {
       element: (
         <AuthRoute>
           <ManageGroup />
+        </AuthRoute>
+      ),
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: '/createWord',
+      element: (
+        <AuthRoute>
+          <CreateWord />
         </AuthRoute>
       ),
       errorElement: <ErrorPage />,
