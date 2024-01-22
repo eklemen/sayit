@@ -17,6 +17,7 @@ export const useGetSounds = () => {
       }, {} as Record<SoundKeys, string>);
     }
   }, [data]);
+
   return {
     sounds: data,
     isLoading,
